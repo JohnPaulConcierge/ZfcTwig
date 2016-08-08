@@ -16,6 +16,8 @@ class TwigStrategyTest extends TestCase
 {
     public function setUp()
     {
+        parent::setUp();
+
         $this->chain  = $chain = new Twig_Loader_Chain();
         $this->loader = new Twig_Loader_Array(['key1' => 'var1']);
         $this->chain->addLoader($this->loader);

@@ -1,6 +1,6 @@
 {
-    "name": "kokspflanze/zfc-twig",
-    "description": "Zend Framework 2 Module that provides a Twig rendering strategy and extensions to render actions or trigger events from your templates",
+    "name": "zf-commons/zfc-twig",
+    "description": "Zend Framework 2/3 Module that provides a Twig rendering strategy and extensions to render actions or trigger events from your templates",
     "type": "library",
     "keywords": [
         "twig",
@@ -26,13 +26,13 @@
     },
 
     "autoload": {
-        "psr-0": {
-            "ZfcTwig\\": "src/"
+        "psr-4": {
+            "ZfcTwig\\": "srcZfcTwig/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "ZfcTwigTest\\": "tests/"
+        "psr-4": {
+            "ZfcTwigTest\\": "tests/ZfcTwigTest"
         }
     },
     "require-dev": {
@@ -41,7 +41,7 @@
         "zendframework/zend-mvc": "~2.7|~3.0",
         "zendframework/zend-servicemanager": "~2.7|~3.0",
         "zendframework/zend-view": "~2.7",
-        "phpunit/phpunit": "~4.8|~5.0"
+        "phpunit/phpunit": "~4.8|~5.5"
     },
     "suggest": {
         "zendframework/zend-mvc-plugin-flashmessenger": "for zf3 support"

@@ -27,7 +27,7 @@
 
     "autoload": {
         "psr-4": {
-            "ZfcTwig\\": "srcZfcTwig/"
+            "ZfcTwig\\": "src/ZfcTwig"
         }
     },
     "autoload-dev": {

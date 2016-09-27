@@ -5,9 +5,9 @@
     "keywords": [
         "twig",
         "module",
-        "zf2"
+        "zf"
     ],
-    "homepage": "http://www.github.com/ZF-Commons/ZfcTwig/",
+    "homepage": "https://github.com/kokspflanze/ZfcTwig/",
     "authors": [
         {
             "name": "Kyle Spraggs",

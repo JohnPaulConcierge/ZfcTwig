@@ -1,17 +1,23 @@
-# ZfcTwig Module for Zend Framework 2 [![Master Branch Build Status](https://secure.travis-ci.org/ZF-Commons/ZfcTwig.png?branch=master)](http://travis-ci.org/ZF-Commons/ZfcTwig)
+# ZfcTwig Module for Zend Framework [![Build Status](https://travis-ci.org/kokspflanze/ZfcTwig.svg?branch=master)](https://travis-ci.org/kokspflanze/ZfcTwig)
 
 ZfcTwig is a module that integrates the [Twig](http://twig.sensiolabs.org) templating engine with
-[Zend Framework 2](http://framework.zend.com).
+[Zend Framework](https://framework.zend.com).
+
+## Information
+
+this is a fork of [ZF-Commons/ZfcTwig](https://github.com/ZF-Commons/ZfcTwig).
+I added ZF3 support, so the module works with Zend Framework 2 and 3.
+If you found a bug, please report it, just pm me in [gitter](https://gitter.im/kokspflanze) or open a PullRequest.
 
 ## Installation
 
- 1. Add `"zf-commons/zfc-twig": "dev-master"` to your `composer.json` file and run `php composer.phar update`.
+ 1. Add `"kokspflanze/zfc-twig": "dev-master"` to your `composer.json` file and run `php composer.phar update`.
  2. Add `ZfcTwig` to your `config/application.config.php` file under the `modules` key.
 
 ## Configuration
 
 ZfcTwig has sane defaults out of the box but offers optional configuration via the `zfctwig` configuration key. For
-detailed information on all available options see the [module config file](https://github.com/ZF-Commons/ZfcTwig/tree/master/config/module.config.php)
+detailed information on all available options see the [module config file](https://github.com/kokspflanze/ZfcTwig/blob/master/config/module.config.php)
 class.
 
 ## Documentation
@@ -39,41 +45,41 @@ return array(
 ### Configuring Twig loaders
 
 By default, ZfcTwig uses a Twig_Loader_Chain so that loaders can be chained together. A convenient default is setup using
-a [filesystem loader](https://github.com/ZF-Commons/ZfcTwig/tree/master/Module.php#L36) with the path set to
+a [filesystem loader](https://github.com/kokspflanze/ZfcTwig/blob/master/config/module.config.php#L31) with the path set to
 `module/Application/view` which should work out of the box for most instances. If you wish to add additional loaders
 to the chain you can register them by adding the service manager alias to the `loaders` configuration key.
 
 ```php
 // in module configuration or autoload override
-return array(
-    'zfctwig' => array(
-        'loaders' => array(
+return [
+    'zfctwig' => [
+        'loader_chain' => [
             'MyTwigFilesystemLoader'
-        )
-    )
-);
+        ]
+    ]
+];
 
 // in some module
 public function getServiceConfiguration()
 {
-    return array(
-        'factories' => array(
+    return [
+        'factories' => [
             'MyTwigFilesystemLoader' => function($sm) {
                 return new \Twig_Loader_Filesystem('my/custom/twig/path');
             }
-        )
-    );
+        ]
+    ];
 }
 ```
 
-### Using ZF2 View Helpers
+### Using ZF View Helpers
 
-Using ZF2 view helpers is supported through the [ZfcTwig\Twig\FallbackFunction](https://github.com/ZF-Commons/ZfcTwig/tree/master/src/ZfcTwig/FallbackFunction.php)
+Using ZF view helpers is supported through the [ZfcTwig\Twig\FallbackFunction](https://github.com/kokspflanze/ZfcTwig/blob/master/src/ZfcTwig/Twig/FallbackFunction.php)
 function.
 
 ```twig
 {# Simple view helper echo #}
-{{ docType() }}
+{{ doctype() }}
 
 {# Echo with additional methods #}
 {{ headTitle('My Company').setSeparator('-') }}
@@ -87,12 +93,12 @@ function.
 
 # Examples
 
-Example .twig files for the skeleton application can be found in the [examples](https://github.com/ZF-Commons/ZfcTwig/tree/master/examples)
+Example .twig files for the skeleton application can be found in the [examples](https://github.com/kokspflanze/ZfcTwig/tree/master/examples)
 folder.
 
 ## Gotchas
 
-ZF2 does not support multiple renderers with view helpers very well. As a workaround, ZfcTwig registers its own
+ZF does not support multiple renderers with view helpers very well. As a workaround, ZfcTwig registers its own
 `HelperPluginManager` that extends the default `Zend\View\HelperPluginManager` and adds the default as a peering manager.
 This let's ZfcTwig register its own renderer with view helpers that require it and fallback to the default manager for
 view helpers that do not require one.

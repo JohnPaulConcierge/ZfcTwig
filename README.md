@@ -29,17 +29,17 @@ ZfcTwig extension is registered.
 
 ```php
 // in module configuration or autoload override
-return array(
-    'zfctwig' => array(
-        'extensions' => array(
+return [
+    'zfctwig' => [
+        'extensions' => [
             // an extension that uses no key
             'My\Custom\Extension',
 
             // an extension with a key so that you can remove it from another module
             'my_custom_extension' => 'My\Custom\Extension'
-        )
-    )
-);
+        ]
+    ]
+];
 ```
 
 ### Configuring Twig loaders

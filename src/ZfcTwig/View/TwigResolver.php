@@ -24,11 +24,7 @@ class TwigResolver implements ResolverInterface
     }
 
     /**
-     * Resolve a template/pattern name to a resource the renderer can consume
-     *
-     * @param  string $name
-     * @param  null|Renderer $renderer
-     * @return bool
+     * @inheritDoc
      */
     public function resolve($name, Renderer $renderer = null)
     {

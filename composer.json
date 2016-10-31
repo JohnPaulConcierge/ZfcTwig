@@ -22,8 +22,8 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "twig/twig": "~1.13"
+        "php": "^5.5 || ^7.0",
+        "twig/twig": "^1.26"
     },
 
     "autoload": {
@@ -37,12 +37,12 @@
         }
     },
     "require-dev": {
-        "zendframework/zend-navigation": "~2.7",
-        "zendframework/zend-modulemanager": "~2.7",
-        "zendframework/zend-mvc": "~2.7|~3.0",
-        "zendframework/zend-servicemanager": "~2.7|~3.0",
-        "zendframework/zend-view": "~2.7",
-        "phpunit/phpunit": "~4.8|~5.5"
+        "zendframework/zend-navigation": "^2.7",
+        "zendframework/zend-modulemanager": "^2.7",
+        "zendframework/zend-mvc": "^2.7 || ^3.0",
+        "zendframework/zend-servicemanager": "^2.7 || ^3.0",
+        "zendframework/zend-view": "^2.7",
+        "phpunit/phpunit": "^4.8 || ^5.6.2"
     },
     "suggest": {
         "zendframework/zend-mvc-plugin-flashmessenger": "for zf3 support"

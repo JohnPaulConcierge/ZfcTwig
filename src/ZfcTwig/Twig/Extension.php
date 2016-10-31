@@ -13,7 +13,7 @@ class Extension extends Twig_Extension
     protected $renderer;
 
     /**
-     * @param \ZfcTwig\View\TwigRenderer $renderer
+     * @param TwigRenderer $renderer
      */
     public function __construct(TwigRenderer $renderer)
     {
@@ -21,7 +21,7 @@ class Extension extends Twig_Extension
     }
 
     /**
-     * @return \Zend\View\HelperPluginManager
+     * @return TwigRenderer
      */
     public function getRenderer()
     {
@@ -35,6 +35,6 @@ class Extension extends Twig_Extension
      */
     public function getName()
     {
-        return 'zfc-twig';
+        return __CLASS__;
     }
 }

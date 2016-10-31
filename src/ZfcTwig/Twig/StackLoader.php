@@ -41,18 +41,24 @@ class StackLoader extends Twig_Loader_Filesystem
 
     protected function findTemplate($name)
     {
-        $name = (string) $name;
+        $throw = func_num_args() > 1 ? func_get_arg(1) : true;
+        $name  = (string)$name;
 
         // normalize name
         $name = preg_replace('#/{2,}#', '/', strtr($name, '\\', '/'));
 
         if (isset($this->cache[$name])) {
-            return $this->cache[$name];
+            if ( ! $throw) {
+                return false;
+            }
+
+            throw new Twig_Error_Loader($this->errorCache[$name]);
         }
 
         // Ensure we have the expected file extension
         $defaultSuffix = $this->getDefaultSuffix();
-        if (pathinfo($name, PATHINFO_EXTENSION) != $defaultSuffix) {;
+        if (pathinfo($name, PATHINFO_EXTENSION) != $defaultSuffix) {
+            ;
             $name .= '.' . $defaultSuffix;
         }
 
@@ -61,7 +67,14 @@ class StackLoader extends Twig_Loader_Filesystem
         $namespace = '__main__';
         if (isset($name[0]) && '@' == $name[0]) {
             if (false === $pos = strpos($name, '/')) {
-                throw new Twig_Error_Loader(sprintf('Malformed namespaced template name "%s" (expecting "@namespace/template_name").', $name));
+
+                if ( ! $throw) {
+                    return false;
+                }
+
+                throw new Twig_Error_Loader(
+                    sprintf('Malformed namespaced template name "%s" (expecting "@namespace/template_name").', $name)
+                );
             }
 
             $namespace = substr($name, 1, $pos - 1);
@@ -69,16 +82,25 @@ class StackLoader extends Twig_Loader_Filesystem
             $name = substr($name, $pos + 1);
         }
 
-        if (!isset($this->paths[$namespace])) {
+        if ( ! isset($this->paths[$namespace])) {
+            if ( ! $throw) {
+                return false;
+            }
             throw new Twig_Error_Loader(sprintf('There are no registered paths for namespace "%s".', $namespace));
         }
 
         foreach ($this->paths[$namespace] as $path) {
-            if (is_file($path.'/'.$name)) {
-                return $this->cache[$name] = $path.'/'.$name;
+            if (is_file($path . '/' . $name)) {
+                return $this->cache[$name] = $path . '/' . $name;
             }
         }
 
-        throw new Twig_Error_Loader(sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace])));
+        if ( ! $throw) {
+            return false;
+        }
+
+        throw new Twig_Error_Loader(
+            sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace]))
+        );
     }
 }

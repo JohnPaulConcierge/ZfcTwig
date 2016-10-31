@@ -82,14 +82,16 @@ class StackLoader extends Twig_Loader_Filesystem
         $namespace = '__main__';
         if (isset($name[0]) && '@' == $name[0]) {
             if (false === $pos = strpos($name, '/')) {
+                $this->errorCache[$name] = sprintf(
+                    'Malformed namespaced template name "%s" (expecting "@namespace/template_name").',
+                    $name
+                );
 
                 if ( ! $throw) {
                     return false;
                 }
 
-                throw new Twig_Error_Loader(
-                    sprintf('Malformed namespaced template name "%s" (expecting "@namespace/template_name").', $name)
-                );
+                throw new Twig_Error_Loader($this->errorCache[$name]);
             }
 
             $namespace = substr($name, 1, $pos - 1);
@@ -98,10 +100,12 @@ class StackLoader extends Twig_Loader_Filesystem
         }
 
         if ( ! isset($this->paths[$namespace])) {
+            $this->errorCache[$name] = sprintf('There are no registered paths for namespace "%s".', $namespace);
+
             if ( ! $throw) {
                 return false;
             }
-            throw new Twig_Error_Loader(sprintf('There are no registered paths for namespace "%s".', $namespace));
+            throw new Twig_Error_Loader($this->errorCache[$name]);
         }
 
         foreach ($this->paths[$namespace] as $path) {
@@ -110,12 +114,19 @@ class StackLoader extends Twig_Loader_Filesystem
             }
         }
 
+        $this->errorCache[$name] = sprintf(
+            'Unable to find template "%s" (looked into: %s).',
+            $name,
+            implode(
+                ', ',
+                $this->paths[$namespace]
+            )
+        );
+
         if ( ! $throw) {
             return false;
         }
 
-        throw new Twig_Error_Loader(
-            sprintf('Unable to find template "%s" (looked into: %s).', $name, implode(', ', $this->paths[$namespace]))
-        );
+        throw new Twig_Error_Loader($this->errorCache[$name]);
     }
 }

@@ -5,6 +5,11 @@ namespace ZfcTwig\Twig;
 use Twig_Error_Loader;
 use Twig_Loader_Filesystem;
 
+/**
+ * Class StackLoader
+ *
+ * @package ZfcTwig\Twig
+ */
 class StackLoader extends Twig_Loader_Filesystem
 {
     /**
@@ -20,12 +25,14 @@ class StackLoader extends Twig_Loader_Filesystem
      * Set default file suffix
      *
      * @param  string $defaultSuffix
+     *
      * @return StackLoader
      */
     public function setDefaultSuffix($defaultSuffix)
     {
-        $this->defaultSuffix = (string) $defaultSuffix;
+        $this->defaultSuffix = (string)$defaultSuffix;
         $this->defaultSuffix = ltrim($this->defaultSuffix, '.');
+
         return $this;
     }
 
@@ -39,6 +46,12 @@ class StackLoader extends Twig_Loader_Filesystem
         return $this->defaultSuffix;
     }
 
+    /**
+     * @param $name
+     *
+     * @return bool|string
+     * @throws Twig_Error_Loader
+     */
     protected function findTemplate($name)
     {
         $throw = func_num_args() > 1 ? func_get_arg(1) : true;

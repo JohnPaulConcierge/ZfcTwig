@@ -48,17 +48,19 @@ class StackLoader extends Twig_Loader_Filesystem
         $name = preg_replace('#/{2,}#', '/', strtr($name, '\\', '/'));
 
         if (isset($this->cache[$name])) {
+            return $this->cache[$name];
+        }
+
+        if (isset($this->errorCache[$name])) {
             if ( ! $throw) {
                 return false;
             }
-
             throw new Twig_Error_Loader($this->errorCache[$name]);
         }
 
         // Ensure we have the expected file extension
         $defaultSuffix = $this->getDefaultSuffix();
         if (pathinfo($name, PATHINFO_EXTENSION) != $defaultSuffix) {
-            ;
             $name .= '.' . $defaultSuffix;
         }
 
